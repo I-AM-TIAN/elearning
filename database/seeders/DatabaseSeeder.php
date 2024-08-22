@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Estado;
 use App\Models\Tipo_Usuario;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -33,6 +34,16 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => 'administrador@',
             'tipo_usuario_id' => 1,
+        ]);
+
+        Estado::create([
+            'codigo' => 1,
+            'nombre' => 'Activo'
+        ]);
+
+        Estado::create([
+            'codigo' => 2,
+            'nombre' => 'Inactivo'
         ]);
     
     }
