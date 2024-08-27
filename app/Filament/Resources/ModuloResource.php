@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CursoResource\Pages;
-use App\Filament\Resources\CursoResource\RelationManagers;
+use App\Filament\Resources\ModuloResource\Pages;
+use App\Filament\Resources\ModuloResource\RelationManagers;
 use App\Models\Curso;
+use App\Models\Modulo;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +14,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CursoResource extends Resource
+class ModuloResource extends Resource
 {
-    protected static ?string $model = Curso::class;
+    protected static ?string $model = Modulo::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,12 +24,20 @@ class CursoResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('id_curso')
+                    ->label('Curso')
+                    ->options(Curso::all()->pluck('nombre', 'id'))
+                    ->searchable()
+                    ->required(),
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('descripcion')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('orden')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -36,10 +45,16 @@ class CursoResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id_curso')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('descripcion')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('orden')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -72,9 +87,9 @@ class CursoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCursos::route('/'),
-            'create' => Pages\CreateCurso::route('/create'),
-            'edit' => Pages\EditCurso::route('/{record}/edit'),
+            'index' => Pages\ListModulos::route('/'),
+            'create' => Pages\CreateModulo::route('/create'),
+            'edit' => Pages\EditModulo::route('/{record}/edit'),
         ];
     }
 }
