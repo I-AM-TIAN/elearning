@@ -23,6 +23,7 @@ class User extends Authenticatable
         'segundo_apellido',
         'email',
         'password',
+        'tipo_usuario_id'
     ];
 
     /**
