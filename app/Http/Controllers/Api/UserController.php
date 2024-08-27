@@ -5,24 +5,37 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
     //
-    public function index(){
-        $usuarios = User::all();
+    public function index(Request $request){
+        $validator = Validator::make($request->all(),[
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        if ($usuarios->isEmpty()) {
+        $user = User::where('email', $request->email)->first();
+        
+        if($user &&  Hash::check($request->password, $user->password)){
             $data = [
-                'message' => 'No students found',
-                'status' => 200,
+                'user' => $user,
+                'status' => 201
             ];
-            return response()->json($data, 200);
+            return response()->json($data, 201);
         }
 
-        return response()->json($usuarios, 200);
+        $data = [
+            'message' => 'Validation failed',
+            'errors' => $validator->errors(),
+            'status' => 400
+        ];
+
+        return response()->json($data, 400);
     }
 
 
@@ -63,7 +76,7 @@ class UserController extends Controller
         }
 
         $data = [
-            'student' => $user,
+            'user' => $user,
             'status' => 201
         ];
 
