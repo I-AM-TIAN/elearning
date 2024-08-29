@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('descripcion');
-            $table->foreignId('id_estado')->constrained('estados')->onDelete('cascade');
+            $table->unsignedBigInteger('id_estado')->default(1);  // Definir como unsignedBigInteger con default
+            $table->foreign('id_estado')->references('id')->on('estados')->onDelete('cascade');  // Añadir la clave foránea
             $table->timestamps();
         });
     }

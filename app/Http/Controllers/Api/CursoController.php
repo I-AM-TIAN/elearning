@@ -1,0 +1,67 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Curso;
+use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\isEmpty;
+
+class CursoController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $cursos = Curso::where('id_estado', 1)->get();
+
+        if($cursos->isEmpty()){
+            $data = [
+                'message'=> "No se han encontrado cursos",
+                'status'=> 400
+            ];
+            return response()->json($data, 400);
+        }
+
+        $data = [
+            'cursos' => $cursos,
+            'status' => 201
+        ];
+
+        return response()->json($data, 201);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}

@@ -12,6 +12,7 @@ class Curso extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
-        'estado'
+        'id_estado',
+        'icono'
     ];
 }
