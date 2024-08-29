@@ -17,20 +17,15 @@ class CursoController extends Controller
     {
         $cursos = Curso::where('id_estado', 1)->get();
 
-        if($cursos->isEmpty()){
+        if ($cursos->isEmpty()) {
             $data = [
-                'message'=> "No se han encontrado cursos",
-                'status'=> 400
+                'message' => "No se han encontrado cursos",
+                'status' => 400
             ];
             return response()->json($data, 400);
         }
 
-        $data = [
-            'cursos' => $cursos,
-            'status' => 201
-        ];
-
-        return response()->json($data, 201);
+        return response()->json($cursos);
     }
 
     /**
