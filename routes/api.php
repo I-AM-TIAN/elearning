@@ -11,3 +11,5 @@ Route::post('/usuarios', [UserController::class, 'store']);
 
 Route::get('/rutas', [CursoController::class, 'index']);
 
+Route::get('/cursos/{id}', [CursoController::class, 'show']);
+

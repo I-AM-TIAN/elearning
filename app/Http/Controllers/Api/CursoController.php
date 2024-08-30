@@ -41,7 +41,15 @@ class CursoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $curso = Curso::find($id);
+        if (!$curso) {
+            $data = [
+                'message' => "Curso no encontrado",
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+        return response()->json($curso);
     }
 
     /**
