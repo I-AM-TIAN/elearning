@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Curso;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 
 use function PHPUnit\Framework\isEmpty;
@@ -41,7 +42,7 @@ class CursoController extends Controller
      */
     public function show(string $id)
     {
-        $curso = Curso::find($id);
+        $curso = Curso::where('uuid', $id)->first();
         if (!$curso) {
             $data = [
                 'message' => "Curso no encontrado",

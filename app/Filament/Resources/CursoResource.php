@@ -41,6 +41,8 @@ class CursoResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('uuid')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('descripcion')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
