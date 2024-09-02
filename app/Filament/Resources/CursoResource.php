@@ -30,6 +30,8 @@ class CursoResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('icono')
+                    ->label('Icono')
+                    ->disk('cloudinary') // Aquí especificas el disco de Cloudinary
                     ->image()
                     ->required(),
             ]);

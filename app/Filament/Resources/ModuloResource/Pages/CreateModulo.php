@@ -17,7 +17,6 @@ class CreateModulo extends CreateRecord
     {
         $curso = Curso::find($data['id_curso']);
 
-        // Crear el corporativo sin 'ubicacion_id' primero
         $modulo = Modulo::create(array_merge($data, ['id_curso' => $curso->id]));
 
         return $modulo;
