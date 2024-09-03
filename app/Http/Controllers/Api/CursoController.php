@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Curso;
+use App\Models\Leccion;
 use App\Models\Modulo;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
@@ -44,13 +45,23 @@ class CursoController extends Controller
     public function show(string $id)
     {
         $curso = Curso::where('uuid', $id)->first();
-        $modulos = Modulo::where('id', $curso->$id)->first();
+
         if (!$curso) {
             $data = [
-                'message' => "Curso no encontrado",
-                'status' => 404
+                'message' => "No se ha encontrado el curso",
+                'status' => 400
             ];
-            return response()->json($data, 404);
+            return response()->json($data, 400);
+        }
+
+        $modulos = Modulo::where('id_curso', $curso->id)->get();
+
+        if ($modulos->isEmpty()) {
+            $data = [
+                'message' => "No se han encontrado módulos",
+                'status' => 400
+            ];
+            return response()->json($data, 400);
         }
 
         $data = [
