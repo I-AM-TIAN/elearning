@@ -69,7 +69,7 @@ class UserController extends Controller
 
         if(!$user){
             $data = [
-                'message' => 'Failed to create student',
+                'message' => 'Failed to create user',
                 'status' => 500
             ];
             return response()->json($data, 500);

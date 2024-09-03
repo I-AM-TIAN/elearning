@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Curso;
+use App\Models\Modulo;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 
@@ -43,6 +44,7 @@ class CursoController extends Controller
     public function show(string $id)
     {
         $curso = Curso::where('uuid', $id)->first();
+        $modulos = Modulo::where('id', $curso->$id)->first();
         if (!$curso) {
             $data = [
                 'message' => "Curso no encontrado",
@@ -50,7 +52,13 @@ class CursoController extends Controller
             ];
             return response()->json($data, 404);
         }
-        return response()->json($curso);
+
+        $data = [
+            'curso' => $curso,
+            'modulos' => $modulos
+        ];
+
+        return response()->json($data);
     }
 
     /**
