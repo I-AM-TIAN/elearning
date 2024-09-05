@@ -1,13 +1,15 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CursoController;
-use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/logear', [UserController::class, 'index']);
+Route::post('/usuarios', [AuthController::class, 'store']);
 
-Route::post('/usuarios', [UserController::class, 'store']);
+Route::post('/logear', [AuthController::class, 'index']);
+
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 Route::get('/rutas', [CursoController::class, 'index']);
 
