@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CursoController;
+use App\Http\Controllers\Api\ModuloController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,4 @@ Route::get('/rutas', [CursoController::class, 'index']);
 
 Route::get('/cursos/{id}', [CursoController::class, 'show']);
 
+Route::get('/modulo/{id}', [ModuloController::class, 'show']);

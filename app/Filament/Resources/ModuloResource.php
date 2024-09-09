@@ -55,6 +55,9 @@ class ModuloResource extends Resource
                 Tables\Columns\TextColumn::make('orden')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('uuid')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
