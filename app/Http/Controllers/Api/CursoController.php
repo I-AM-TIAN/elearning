@@ -47,8 +47,8 @@ class CursoController extends Controller
         $curso = Curso::where('uuid', $id)->first();
 
         if (!$curso) {
-            $data = [
-                'message' => "No se ha encontrado el curso",
+            $data = (object) [
+                'message' => 'No se encontró el curso',
                 'status' => 400
             ];
             return response()->json($data, 400);
@@ -57,14 +57,14 @@ class CursoController extends Controller
         $modulos = Modulo::where('id_curso', $curso->id)->get();
 
         if ($modulos->isEmpty()) {
-            $data = [
-                'message' => "No se han encontrado módulos",
+            $data = (object) [
+                'message' => 'No se encontraron modulos',
                 'status' => 400
             ];
             return response()->json($data, 400);
         }
 
-        $data = [
+        $data = (object) [
             'curso' => $curso,
             'modulos' => $modulos
         ];
