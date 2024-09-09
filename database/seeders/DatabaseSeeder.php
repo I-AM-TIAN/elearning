@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Estado;
+use App\Models\Leccion;
+use App\Models\Tipo_Leccion;
 use App\Models\Tipo_Usuario;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -44,6 +46,16 @@ class DatabaseSeeder extends Seeder
         Estado::create([
             'codigo' => 2,
             'nombre' => 'Inactivo'
+        ]);
+
+        Tipo_Leccion::create([
+            'codigo' => 1,
+            'nombre' => 'Video'
+        ]);
+
+        Tipo_Leccion::create([
+            'codigo' => 2,
+            'nombre' => 'Cuestionario'
         ]);
     
     }

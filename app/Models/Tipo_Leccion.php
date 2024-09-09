@@ -5,20 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Leccion extends Model
+class Tipo_Leccion extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id_modulo',
+        'codigo',
         'nombre',
-        'descripcion',
-        'video',
-        'orden'
     ];
 
-    public function tipoLeccion()
-    {
-        return $this->belongsTo(Tipo_Leccion::class);
-    }
+    
 }

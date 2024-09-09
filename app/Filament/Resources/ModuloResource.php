@@ -7,6 +7,7 @@ use App\Filament\Resources\ModuloResource\RelationManagers;
 use App\Models\Curso;
 use App\Models\Modulo;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -24,21 +25,25 @@ class ModuloResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('id_curso')
+                Repeater::make('modulos')
+                ->schema([
+                    Forms\Components\Select::make('id_curso')
                     ->label('Curso')
                     ->options(Curso::all()->pluck('nombre', 'id'))
                     ->searchable()
                     ->required(),
-                Forms\Components\TextInput::make('nombre')
+                    Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('descripcion')
+                    Forms\Components\TextInput::make('descripcion')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('orden')
+                    Forms\Components\TextInput::make('orden')
                     ->required()
                     ->numeric(),
-            ]);
+                ])
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -53,9 +58,6 @@ class ModuloResource extends Resource
                 Tables\Columns\TextColumn::make('descripcion')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('orden')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('uuid')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
