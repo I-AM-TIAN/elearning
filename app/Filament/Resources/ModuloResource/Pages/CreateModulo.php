@@ -15,21 +15,17 @@ class CreateModulo extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        // Iterar sobre los módulos dentro del repeater
         foreach ($data['modulos'] as $moduloData) {
-            // Buscar el curso usando el id_curso dentro de cada módulo
             $curso = Curso::find($moduloData['id_curso']);
 
-            // Crear el módulo, asignando el id_curso correctamente
             Modulo::create(array_merge($moduloData, ['id_curso' => $curso->id]));
         }
 
-        // Si estás creando más que los módulos (e.g. un curso principal), puedes devolver ese registro
-        return new Modulo();  // Devuelve lo que sea necesario aquí
+        return new Modulo();
     }
 
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('index'); // Redirige a la lista de módulos después de la creación
+        return $this->getResource()::getUrl('index');
     }
 }

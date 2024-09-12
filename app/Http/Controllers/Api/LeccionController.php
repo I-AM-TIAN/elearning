@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Curso;
+use App\Models\Leccion;
+use App\Models\Modulo;
 use Illuminate\Http\Request;
 
 class LeccionController extends Controller
@@ -36,7 +39,27 @@ class LeccionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $leccion = Leccion::find($id);
+        if (!$leccion) {
+            return response()->json(['message' => 'Lección no encontrada.'], 404);
+        }
+
+        $leccion->visto = true;
+        $leccion->save();
+
+        $modulo = $leccion->modulo;
+        if (!$modulo) {
+            return response()->json(['message' => 'Módulo no encontrado.'], 404);
+        }
+
+        $curso = $modulo->curso;
+        if (!$curso) {
+            return response()->json(['message' => 'Curso no encontrado.'], 404);
+        }
+
+        $curso->actualizarProgreso();
+
+        return response()->json(['message' => 'Lección completada y progreso actualizado.']);
     }
 
     /**

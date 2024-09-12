@@ -14,11 +14,16 @@ class Leccion extends Model
         'nombre',
         'descripcion',
         'video',
-        'orden'
+        'orden',
     ];
 
     public function tipoLeccion()
     {
         return $this->belongsTo(Tipo_Leccion::class);
+    }
+
+    public function modulo()
+    {
+        return $this->belongsTo(Modulo::class, 'id_modulo');
     }
 }
