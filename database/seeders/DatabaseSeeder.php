@@ -47,16 +47,5 @@ class DatabaseSeeder extends Seeder
             'codigo' => 2,
             'nombre' => 'Inactivo'
         ]);
-
-        Tipo_Leccion::create([
-            'codigo' => 1,
-            'nombre' => 'Video'
-        ]);
-
-        Tipo_Leccion::create([
-            'codigo' => 2,
-            'nombre' => 'Cuestionario'
-        ]);
-    
     }
 }

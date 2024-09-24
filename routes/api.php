@@ -17,6 +17,8 @@ Route::get('/rutas', [CursoController::class, 'index']);
 
 Route::get('/cursos/{id}', [CursoController::class, 'show']);
 
+Route::post('/cursos/{curso}/inscribir/{usuario}', [CursoController::class, 'inscribir']);
+
 Route::get('/modulo/{id}', [ModuloController::class, 'show']);
 
 Route::get('/completarleccion/{id}', [LeccionController::class, 'update']);

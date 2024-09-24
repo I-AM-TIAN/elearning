@@ -37,26 +37,8 @@ class Curso extends Model
         return $this->hasMany(Modulo::class, 'id_curso');
     }
 
-    public function calcularProgreso()
+    public function usuarios()
     {
-        $totalLecciones = 0;
-        $leccionesCompletadas = 0;
-
-        // Obtener los módulos asociados al curso
-        $modulos = $this->modulos;
-        if ($modulos) {
-            foreach ($modulos as $modulo) {
-                $totalLecciones += $modulo->lecciones->count();
-                $leccionesCompletadas += $modulo->lecciones->where('visto', true)->count();
-            }
-        }
-
-        return $totalLecciones > 0 ? ($leccionesCompletadas / $totalLecciones) * 100 : 0;
-    }
-
-    public function actualizarProgreso()
-    {
-        $this->progreso = $this->calcularProgreso();
-        $this->save();
+        return $this->belongsToMany(User::class, 'inscripciones', 'curso_id', 'usuario_id');
     }
 }

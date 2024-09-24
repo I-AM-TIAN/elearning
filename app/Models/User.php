@@ -61,10 +61,15 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
 
-        if($this->tipo_usuario_id === 1){
+        if ($this->tipo_usuario_id === 1) {
             return true;
         }
 
         return false;
+    }
+
+    public function cursos()
+    {
+        return $this->belongsToMany(Curso::class, 'inscripciones', 'usuario_id', 'curso_id');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Curso;
 use App\Models\Leccion;
 use App\Models\Modulo;
+use App\Models\User;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 
@@ -87,4 +88,31 @@ class CursoController extends Controller
     {
         //
     }
+
+    /**
+     * Inscribir usuarios en cursos
+     */
+
+     public function inscribir($curso, $usuario)
+     {
+         $usuarioI = User::findOrFail($usuario);
+         $cursoI = Curso::findOrFail($curso);
+     
+         // Verificar si el usuario ya está inscrito en el curso
+         if ($usuarioI->cursos()->where('curso_id', $curso)->exists()) {
+             return response()->json([
+                 'message' => 'Usuario ya está inscrito en el curso',
+                 'status' => 400
+             ], 400);
+         }
+     
+         // Inscribir al usuario en el curso
+         $usuarioI->cursos()->attach($cursoI);
+     
+         return response()->json([
+             'message' => 'Usuario inscrito en el curso',
+             'status' => 200
+         ]);
+     }
+     
 }
