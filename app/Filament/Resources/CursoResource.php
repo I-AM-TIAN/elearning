@@ -26,7 +26,7 @@ class CursoResource extends Resource
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('descripcion')
+                Forms\Components\Textarea::make('descripcion')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('icono')
