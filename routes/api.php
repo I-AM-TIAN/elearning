@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CursoController;
+use App\Http\Controllers\Api\InscripcionController;
 use App\Http\Controllers\Api\LeccionController;
 use App\Http\Controllers\Api\ModuloController;
 use Illuminate\Http\Request;
@@ -22,3 +23,5 @@ Route::post('/cursos/{curso}/inscribir/{usuario}', [CursoController::class, 'ins
 Route::get('/modulo/{id}', [ModuloController::class, 'show']);
 
 Route::get('/completarleccion/{id}', [LeccionController::class, 'update']);
+
+Route::post('{usuarioId}/modulos/{moduloId}/completar', [InscripcionController::class, 'completarModulo']);

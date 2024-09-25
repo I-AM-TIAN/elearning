@@ -93,26 +93,35 @@ class CursoController extends Controller
      * Inscribir usuarios en cursos
      */
 
-     public function inscribir($curso, $usuario)
-     {
-         $usuarioI = User::findOrFail($usuario);
-         $cursoI = Curso::findOrFail($curso);
-     
-         // Verificar si el usuario ya está inscrito en el curso
-         if ($usuarioI->cursos()->where('curso_id', $curso)->exists()) {
-             return response()->json([
-                 'message' => 'Usuario ya está inscrito en el curso',
-                 'status' => 400
-             ], 400);
-         }
-     
-         // Inscribir al usuario en el curso
-         $usuarioI->cursos()->attach($cursoI);
-     
-         return response()->json([
-             'message' => 'Usuario inscrito en el curso',
-             'status' => 200
-         ]);
-     }
-     
+    public function inscribir($curso, $usuario)
+    {
+        $usuarioI = User::findOrFail($usuario);
+        $cursoI = Curso::findOrFail($curso);
+
+        // Verificar si el usuario ya está inscrito en el curso
+        if ($usuarioI->cursos()->where('curso_id', $curso)->exists()) {
+            return response()->json([
+                'message' => 'Usuario ya está inscrito en el curso',
+                'status' => 400
+            ], 400);
+        }
+
+        // Obtener el primer módulo del curso
+        $primerModulo = $cursoI->modulos()->orderBy('id')->first();
+
+        if (!$primerModulo) {
+            return response()->json([
+                'message' => 'El curso no tiene módulos disponibles',
+                'status' => 400
+            ], 400);
+        }
+
+        // Inscribir al usuario en el curso y asignar el primer módulo
+        $usuarioI->cursos()->attach($cursoI, ['modulo_id' => $primerModulo->id]);
+
+        return response()->json([
+            'message' => 'Usuario inscrito en el curso',
+            'status' => 200
+        ]);
+    }
 }

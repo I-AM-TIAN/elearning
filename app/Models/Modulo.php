@@ -38,4 +38,9 @@ class Modulo extends Model
     {
         return $this->hasMany(Leccion::class, 'id_modulo');
     }
+
+    public function inscripciones()
+    {
+        return $this->hasMany(Inscripcion::class, 'modulo_id');
+    }
 }
