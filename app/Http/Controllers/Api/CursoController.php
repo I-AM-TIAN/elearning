@@ -95,8 +95,8 @@ class CursoController extends Controller
 
     public function inscribir($curso, $usuario)
     {
-        $usuarioI = User::findOrFail($usuario);
-        $cursoI = Curso::findOrFail($curso);
+        $usuarioI = User::where('uuid', $usuario)->firstOrFail();
+        $cursoI = Curso::where('uuid', $curso)->firstOrFail();
 
         // Verificar si el usuario ya está inscrito en el curso
         if ($usuarioI->cursos()->where('curso_id', $curso)->exists()) {
