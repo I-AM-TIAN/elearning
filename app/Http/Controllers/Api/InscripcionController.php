@@ -55,7 +55,7 @@ class InscripcionController extends Controller
 
         return response()->json([
             'message' => 'Módulo completado con éxito',
-            'siguiente_modulo_id' => $siguienteModulo ? $siguienteModulo->id : null
+            'siguiente_modulo_id' => $siguienteModulo ? $siguienteModulo->uuid : null
         ]);
     }
 
