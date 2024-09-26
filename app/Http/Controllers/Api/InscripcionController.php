@@ -13,10 +13,20 @@ class InscripcionController extends Controller
     public function completarModulo($usuarioId, $moduloId)
     {
         // Encontrar el usuario autenticado
-        $user = User::find($usuarioId);
+        $user = User::where('uuid', $usuarioId)->first();
+
+        // Encontrar la inscripción del usuario para el módulo actual
+        // Encontrar el módulo por su UUID
+        $modulo = Modulo::where('uuid', $moduloId)->first();
+
+        // Si el módulo no existe, retornar un error
+        if (!$modulo) {
+            return response()->json(['error' => 'Módulo no encontrado'], 404);
+        }
+
         // Encontrar la inscripción del usuario para el módulo actual
         $inscripcion = Inscripcion::where('usuario_id', $user->id)
-            ->where('modulo_id', $moduloId)
+            ->where('modulo_id', $modulo->id)
             ->first();
 
         // Si la inscripción no existe, retornar un error
@@ -29,16 +39,11 @@ class InscripcionController extends Controller
         $inscripcion->save();
 
         // Buscar el siguiente módulo no completado del curso
-        $siguienteModulo = Modulo::where('id_curso', $inscripcion->curso_id)
-            ->where('orden', '>', function ($query) use ($moduloId) {
-                $query->select('orden')
-                      ->from('modulos')
-                      ->where('id', $moduloId)
-                      ->first();
-            })
+        $siguienteModulo = Modulo::where('id_curso', $modulo->id_curso)
+            ->where('orden', '>', $modulo->orden)
             ->whereDoesntHave('inscripciones', function ($query) use ($user) {
-                $query->where('usuario_id', $user->id)
-                      ->where('completado', true);
+            $query->where('usuario_id', $user->id)
+                  ->where('completado', true);
             })
             ->orderBy('orden')
             ->first();

@@ -24,4 +24,4 @@ Route::get('/modulo/{id}', [ModuloController::class, 'show']);
 
 Route::get('/completarleccion/{id}', [LeccionController::class, 'update']);
 
-Route::post('/{usuarioId}/modulos/{moduloId}/completar', [InscripcionController::class, 'completarModulo']);
+Route::post('{usuarioId}/modulos/{moduloId}/completar', [InscripcionController::class, 'completarModulo']);
