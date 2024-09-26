@@ -30,8 +30,9 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('authToken')->plainTextToken;
+        $uuid = $user->uuid;
 
-        return response()->json(['token' => $token], 200);
+        return response()->json(['token' => $token, 'uuid' => $uuid], 200);
     }
 
     /**

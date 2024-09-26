@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -71,5 +72,16 @@ class User extends Authenticatable implements FilamentUser
     public function cursos()
     {
         return $this->belongsToMany(Curso::class, 'inscripciones', 'usuario_id', 'curso_id');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = Str::uuid()->toString();
+            }
+        });
     }
 }
