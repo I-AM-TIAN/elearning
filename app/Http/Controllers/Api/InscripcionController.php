@@ -30,11 +30,17 @@ class InscripcionController extends Controller
 
         // Buscar el siguiente módulo no completado del curso
         $siguienteModulo = Modulo::where('id_curso', $inscripcion->curso_id)
+            ->where('orden', '>', function ($query) use ($moduloId) {
+                $query->select('orden')
+                      ->from('modulos')
+                      ->where('id', $moduloId)
+                      ->first();
+            })
             ->whereDoesntHave('inscripciones', function ($query) use ($user) {
                 $query->where('usuario_id', $user->id)
                       ->where('completado', true);
             })
-            ->orderBy('id')
+            ->orderBy('orden')
             ->first();
 
         // Si hay un siguiente módulo, actualizar la inscripción con el nuevo módulo
