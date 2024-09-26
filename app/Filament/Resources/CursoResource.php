@@ -31,8 +31,6 @@ class CursoResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('icono')
                     ->label('Icono')
-                    ->disk('cloudinary') // Aquí especificas el disco de Cloudinary
-                    ->image()
                     ->required(),
             ]);
     }
