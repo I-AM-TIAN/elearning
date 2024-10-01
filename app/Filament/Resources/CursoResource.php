@@ -29,10 +29,8 @@ class CursoResource extends Resource
                 Forms\Components\Textarea::make('descripcion')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\FileUpload::make('icono')
+                Forms\Components\TextInput::make('icono')
                     ->label('Icono')
-                    ->image()
-                    ->disk('public')
                     ->required(),
             ]);
     }
