@@ -32,7 +32,7 @@ class CursoResource extends Resource
                 Forms\Components\FileUpload::make('icono')
                     ->label('Icono')
                     ->image()
-                    ->disk('cloudinary')
+                    ->disk('public')
                     ->required(),
             ]);
     }
